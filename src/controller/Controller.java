@@ -25,12 +25,18 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "start" -> showPlots();
+		
+		case "back" -> showStart();
 		}
 	}
 	
-	
+	//corregir
+	private void showStart() {
+		view.changeView(0, null);
+	}
 
 	private void showPlots() {
+		
 		new Thread(() -> {
 			
 			int aux11 = 0;
@@ -41,7 +47,6 @@ public class Controller implements ActionListener {
 			int aux32 = 10;
 			int aux41 = 20;
 			int aux42 = 10;
-			
 			int count = 0;
 			Object[] data = null;
 			while (count++ != 300) {
