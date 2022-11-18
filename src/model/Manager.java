@@ -15,7 +15,7 @@ public class Manager {
 	}
 
 	private double[] generateRi(int k, int c) {
-		return GenerateRi.getInstance().generateRiArray(k, c, 20);
+		return GenerateRi.getInstance().generateRiArray(k, c, 15);
 	}
 
 	private void startSimulation() {
@@ -125,20 +125,19 @@ public class Manager {
 		return aux;
 	}
 	
-	public void show() {
-//		for (int i = 0; i < persons.length; i++) {
-//			System.out.println("\n"+(i+1)+"\n");
-//			persons[i].show();
-//			
-//		}
-		System.out.println("inicio");
-		for (int i = 0; i < 365; i++) {
-			int[] aux = calculateNumberPeopleInState(i);
-			System.out.println(aux[0]+" "+aux[1]+" "+aux[2]);
+	/**
+	 * Metodo para obtener las posiciones de las personas y sus estados en un instante de tiempo
+	 * @param instantOfTime instante de tiempo
+	 * @return posiciones en una matriz de double
+	 */
+	public double[][] getPositions(int instantOfTime){
+		double [][] positions = new double [persons.length][3];
+		for (int i = 0; i < positions.length; i++) {
+			Coordinate coordinate = persons[i].getCoordinate(i);
+			positions[i][0] = coordinate.getX();
+			positions[i][1] = coordinate.getY();
+			positions[i][0] = coordinate.getState().ordinal();
 		}
-	}
-	
-	public static void main(String[] args) {
-		new Manager(2000, 2000, 2000, 2000, 20, 11).show();
+		return positions;
 	}
 }
