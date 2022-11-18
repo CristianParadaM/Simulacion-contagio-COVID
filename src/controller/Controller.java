@@ -1,5 +1,6 @@
 package controller;
 
+import model.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +10,8 @@ public class Controller implements ActionListener {
 
 	private static Controller controller = null;
 	private JFrameMain view;
-
+	private Manager manager;
+	
 	public static Controller getInstance() {
 		if (controller == null) {
 			controller = new Controller();
@@ -30,21 +32,26 @@ public class Controller implements ActionListener {
 		}
 	}
 	
-	//corregir
 	private void showStart() {
 		view.changeView(0, null);
 	}
 
 	private void showPlots() {
-		double[][] randwalk = new double[4][3];
-		double[][] analistics = new double[4][3];
-		
 		new Thread(() -> {
+			this.manager = new Manager(
+					Integer.parseInt(view.getText1()), 
+					Integer.parseInt(view.getText2()), 
+					Integer.parseInt(view.getText3()), 
+					Integer.parseInt(view.getText4()), 
+					Integer.parseInt(view.getText5()), 
+					Integer.parseInt(view.getText6()));
+			
 			try {
 			int count = 0;
 			Object[] data = null;
 			
-			while (count++ != 300) {
+			for (int i = 0; i < 365; i++) {
+//				Object[] arrays = separateArrays();
 				
 //					data = new Object[] { new Object[] { 
 //							new double[][] { { aux11 }, { aux12++ } },
@@ -58,15 +65,12 @@ public class Controller implements ActionListener {
 //									testExp(count+3)
 //					}};
 				
-					for (int i = 0; i < randwalk.length; i++) {
-						
-					}
-					
 					//0 enfermo con mascara
 					//1 enfermo sin mascara
 					//2 normal con mascara
 					//3 normal sin mascara
 					//4 recuperado
+					
 					if (count == 1) {
 						view.changeView(1, data);
 					} else {

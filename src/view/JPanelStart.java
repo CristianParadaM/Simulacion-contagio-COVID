@@ -23,11 +23,15 @@ public class JPanelStart extends JPanel {
 	private JLabel jLabelOption2;
 	private JLabel jLabelOption3;
 	private JLabel jLabelOption4;
+	private JLabel jLabelOption5;
+	private JLabel jLabelOption6;
 
 	private JTextField jTextField1;
 	private JTextField jTextField2;
 	private JTextField jTextField3;
 	private JTextField jTextField4;
+	private JTextField jTextField5;
+	private JTextField jTextField6;
 
 	private JButton jButtonStart;
 
@@ -39,10 +43,14 @@ public class JPanelStart extends JPanel {
 		this.jLabelOption2 = new JLabel("Numero de personas enfermas sin tapabocas", JLabel.CENTER);
 		this.jLabelOption3 = new JLabel("Numero de personas sanas con tapabocas", JLabel.CENTER);
 		this.jLabelOption4 = new JLabel("Numero de personas sanas sin tapabocas", JLabel.CENTER);
+		this.jLabelOption5 = new JLabel("Numero Par menor a 32.000", JLabel.CENTER);
+		this.jLabelOption6 = new JLabel("Numero Impar menor a 32.000 ", JLabel.CENTER);
 		this.jTextField1 = new JTextField();
 		this.jTextField2 = new JTextField();
 		this.jTextField3 = new JTextField();
 		this.jTextField4 = new JTextField();
+		this.jTextField5 = new JTextField();
+		this.jTextField6 = new JTextField();
 		this.jButtonStart = new JButton("       iniciar        ");
 		init();
 	}
@@ -54,11 +62,15 @@ public class JPanelStart extends JPanel {
 		configureLabels(jLabelOption2, JFrameMain.FONT, 30, Font.PLAIN);
 		configureLabels(jLabelOption3, JFrameMain.FONT, 30, Font.PLAIN);
 		configureLabels(jLabelOption4, JFrameMain.FONT, 30, Font.PLAIN);
+		configureLabels(jLabelOption5, JFrameMain.FONT, 30, Font.PLAIN);
+		configureLabels(jLabelOption6, JFrameMain.FONT, 30, Font.PLAIN);
 
 		configureText(jTextField1, JFrameMain.FONT, 30, Font.PLAIN);
 		configureText(jTextField2, JFrameMain.FONT, 30, Font.PLAIN);
 		configureText(jTextField3, JFrameMain.FONT, 30, Font.PLAIN);
 		configureText(jTextField4, JFrameMain.FONT, 30, Font.PLAIN);
+		configureText(jTextField5, JFrameMain.FONT, 30, Font.PLAIN);
+		configureText(jTextField6, JFrameMain.FONT, 30, Font.PLAIN);
 
 		configureB(jButtonStart, JFrameMain.FONT, 20, Font.PLAIN);
 
@@ -99,10 +111,22 @@ public class JPanelStart extends JPanel {
 		gbc.insets.top = 0;
 		this.add(jTextField4, gbc);
 		gbc.gridy = 9;
-		gbc.insets.top = 60;
+		gbc.insets.top = margin;
+		this.add(jLabelOption5, gbc);
+		gbc.gridy = 10;
+		gbc.insets.top = 0;
+		this.add(jTextField5, gbc);
+		gbc.gridy = 11;
+		gbc.insets.top = margin;
+		this.add(jLabelOption6, gbc);
+		gbc.gridy = 12;
+		gbc.insets.top = 0;
+		this.add(jTextField6, gbc);
+		gbc.insets.top = margin;
+		gbc.gridy = 13;
 		gbc.fill = 0;
 		this.add(jButtonStart, gbc);
-		gbc.gridy = 10;
+		gbc.gridy = 14;
 		gbc.weighty = 1;
 		this.add(Box.createRigidArea(new Dimension(0, 0)), gbc);
 	}
@@ -128,4 +152,24 @@ public class JPanelStart extends JPanel {
 		jButton.addActionListener(Controller.getInstance());
 		jButton.setActionCommand("start");
 	}
+	
+	public String getText1() {
+		return jTextField1.getText();
+	}
+	public String getText2() {
+		return jTextField2.getText();
+	}
+	public String getText3() {
+		return jTextField3.getText();
+	}
+	public String getText4() {
+		return jTextField4.getText();
+	}
+	public String getText5() {
+		return jTextField5.getText();
+	}
+	public String getText6() {
+		return jTextField6.getText();
+	}
+	
 }

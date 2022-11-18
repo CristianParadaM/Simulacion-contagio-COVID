@@ -1,5 +1,7 @@
 package model;
 
+import view.JFrameMain;
+
 public class Manager {
 	private Person[] persons;
 	private int amountPersons;
@@ -19,11 +21,14 @@ public class Manager {
 	}
 
 	private void startSimulation() {
+		JFrameMain.createProgress(0, 365, "Generando simulacion");
 		for (int i = 0; i < 365; i++) {
+			JFrameMain.setProgressBar(i);
 			for (int j = 0; j < persons.length; j++) {
 				comparePosition(persons[j], i);
 			}
 		}
+		JFrameMain.disposeDialog();
 	}
 
 	private void comparePosition(Person person, int instantOfTime) {
@@ -86,7 +91,9 @@ public class Manager {
 		double[] positionsStartX = new DistribucionUniforme(0, 100, GenerateRi.getInstance().generateRiArray(k, c, g)).generatePseudorandomNumbers();
 		double[] positionsStartY = new DistribucionUniforme(0, 100, GenerateRi.getInstance().generateRiArray(k+2, c+2, g)).generatePseudorandomNumbers();
 		Person[] persons = new Person[amountPersons];
+		JFrameMain.createProgress(0, persons.length, "Generando Personas");
 		for (int i = 0; i < persons.length; i++, count++) {
+			JFrameMain.setProgressBar(i);
 			Coordinate positionStart = new Coordinate((int)positionsStartX[count], (int)positionsStartY[count], getState(i, numberOfNormalWithMask, numberOfNormalWithoutMask, numberOfSickWithMask, numberOfSickWithoutMask));
 			while (positionStart.getX() == 0 || positionStart.getX() == 99 || positionStart.getY() == 0 || positionStart.getY() == 99) {
 				count++;
@@ -95,6 +102,7 @@ public class Manager {
 			}
 			persons[i] = new Person(positionStart, (int)positionsStartX[count], (int)positionsStartY[count]);
 		}
+		JFrameMain.disposeDialog();
 		return persons;
 	}
 
@@ -125,20 +133,4 @@ public class Manager {
 		return aux;
 	}
 	
-	public void show() {
-//		for (int i = 0; i < persons.length; i++) {
-//			System.out.println("\n"+(i+1)+"\n");
-//			persons[i].show();
-//			
-//		}
-		System.out.println("inicio");
-		for (int i = 0; i < 365; i++) {
-			int[] aux = calculateNumberPeopleInState(i);
-			System.out.println(aux[0]+" "+aux[1]+" "+aux[2]);
-		}
-	}
-	
-	public static void main(String[] args) {
-		new Manager(2000, 2000, 2000, 2000, 20, 11).show();
-	}
 }

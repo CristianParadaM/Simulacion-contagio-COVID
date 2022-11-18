@@ -195,6 +195,25 @@ public class JPanelMain extends JPanel {
 
 	}
 	
+	public String getText1() {
+		return jPanelStart.getText1();
+	}
+	public String getText2() {
+		return jPanelStart.getText2();
+	}
+	public String getText3() {
+		return jPanelStart.getText3();
+	}
+	public String getText4() {
+		return jPanelStart.getText4();
+	}
+	public String getText5() {
+		return jPanelStart.getText4();
+	}
+	public String getText6() {
+		return jPanelStart.getText4();
+	}
+	
 
 	@Override
 	public void paint(Graphics g) {
