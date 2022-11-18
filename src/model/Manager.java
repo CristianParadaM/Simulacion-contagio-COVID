@@ -17,7 +17,7 @@ public class Manager {
 	}
 
 	private double[] generateRi(int k, int c) {
-		return GenerateRi.getInstance().generateRiArray(k, c, 20);
+		return GenerateRi.getInstance().generateRiArray(k, c, 15);
 	}
 
 	private void startSimulation() {
@@ -133,4 +133,19 @@ public class Manager {
 		return aux;
 	}
 	
+	/**
+	 * Metodo para obtener las posiciones de las personas y sus estados en un instante de tiempo
+	 * @param instantOfTime instante de tiempo
+	 * @return posiciones en una matriz de double
+	 */
+	public double[][] getPositions(int instantOfTime){
+		double [][] positions = new double [persons.length][3];
+		for (int i = 0; i < positions.length; i++) {
+			Coordinate coordinate = persons[i].getCoordinate(i);
+			positions[i][0] = coordinate.getX();
+			positions[i][1] = coordinate.getY();
+			positions[i][0] = coordinate.getState().ordinal();
+		}
+		return positions;
+	}
 }
