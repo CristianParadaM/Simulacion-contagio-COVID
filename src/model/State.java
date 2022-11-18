@@ -1,0 +1,5 @@
+package model;
+
+public enum State {
+	SICK_WITH_MASK, SICK_WITHOUT_A_MASK, NORMAL_WITH_MASK, NORMAL_WITHOUT_A_MASK, RECOVERED
+}
