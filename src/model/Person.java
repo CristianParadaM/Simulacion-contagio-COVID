@@ -40,13 +40,4 @@ public class Person {
 		return positions[instantOfTime];
 	}
 	
-	public void show() {
-		for (int i = 0; i < positions.length; i++) {
-			System.out.println(positions[i].getX()+" "+positions[i].getY()+" "+positions[i].getState());
-		}
-	}
-	
-	public static void main(String[] args) {
-		new Person(new Coordinate(1, 154, State.RECOVERED), 4, 3).show();
-	}
 }

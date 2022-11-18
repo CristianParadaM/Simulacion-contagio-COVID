@@ -139,6 +139,6 @@ public class Manager {
 	}
 	
 	public static void main(String[] args) {
-		new Manager(1000, 1000, 1000, 1000, 20, 11).show();
+		new Manager(2000, 2000, 2000, 2000, 20, 11).show();
 	}
 }
