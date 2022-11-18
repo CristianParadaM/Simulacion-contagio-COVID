@@ -28,6 +28,8 @@ public class JFrameMain extends JFrame implements ActionListener{
 		case "start":
 			jPanelMain.changeView(1);
 			break;
+		case "back":
+			jPanelMain.changeView(0);
 		}
 	}
 	
