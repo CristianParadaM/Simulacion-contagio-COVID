@@ -11,7 +11,7 @@ public class Controller implements ActionListener {
 	private static Controller controller = null;
 	private JFrameMain view;
 	private Manager manager;
-	
+
 	public static Controller getInstance() {
 		if (controller == null) {
 			controller = new Controller();
@@ -27,62 +27,58 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "start" -> showPlots();
-		
+
 		case "back" -> showStart();
 		}
 	}
-	
+
 	private void showStart() {
 		view.changeView(0, null);
 	}
 
 	private void showPlots() {
 		new Thread(() -> {
-			this.manager = new Manager(
-					Integer.parseInt(view.getText1()), 
-					Integer.parseInt(view.getText2()), 
-					Integer.parseInt(view.getText3()), 
-					Integer.parseInt(view.getText4()), 
-					Integer.parseInt(view.getText5()), 
-					Integer.parseInt(view.getText6()));
-			
+
+			int n1 = Integer.parseInt(view.getText1());
+			int n2 = Integer.parseInt(view.getText2());
+			int n3 = Integer.parseInt(view.getText3());
+			int n4 = Integer.parseInt(view.getText4());
+
+			int k = Integer.parseInt(view.getText5());
+			int c = Integer.parseInt(view.getText6());
+
+			this.manager = new Manager(n1, n2, n3, n4, k, c);
+
 			try {
-			int count = 0;
-			Object[] data = null;
-			
-			for (int i = 0; i < 365; i++) {
-//				Object[] arrays = separateArrays();
-				
-//					data = new Object[] { new Object[] { 
-//							new double[][] { { aux11 }, { aux12++ } },
-//							new double[][] { { aux21++ }, { aux22} },
-//							new double[][] { { aux31 }, { aux32++ } },
-//							new double[][] { { aux41++ }, { aux42 } } }, 
-//							new Object[] {
-//									testExp(count),
-//									testExp(count+1),
-//									testExp(count+2),
-//									testExp(count+3)
-//					}};
-				
-					//0 enfermo con mascara
-					//1 enfermo sin mascara
-					//2 normal con mascara
-					//3 normal sin mascara
-					//4 recuperado
+				Object[] data = null;
+
+				for (int i = 0; i < 365; i++) {
+					Object[] arrays = manager.separateArrays(i);
+					Object[] analitics = manager.separateAnalitics(i);
 					
-					if (count == 1) {
+					data = new Object[] {new Object[] {
+						(double[][])arrays[0],
+						(double[][])arrays[1],
+						(double[][])arrays[2],
+						(double[][])arrays[3],
+						(double[][])arrays[4]
+					}, new Object[] {
+							(double[][])analitics[0],
+							(double[][])analitics[1],
+							(double[][])analitics[2]
+					}, manager.calculateNumberPeopleInState(i) };
+					if (i == 0) {
 						view.changeView(1, data);
 					} else {
 						view.updateChart(data);
 					}
-					Thread.sleep(300);
+					Thread.sleep(1000);
 				}
 			} catch (InterruptedException e) {
 			}
 		}).start();
 	}
-	
+
 	public void startApp() {
 		view = JFrameMain.getInstance();
 		view.init();

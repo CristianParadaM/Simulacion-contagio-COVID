@@ -52,13 +52,12 @@ public class JPanelMain extends JPanel {
 		this.jScrollPane.getViewport().setOpaque(false);
 		this.jPanelContainer.setOpaque(false);
 		this.jPanelContainer.setLayout(null);
-		this.jPanelContainer.setPreferredSize(new Dimension(1400, 2000));
+		this.jPanelContainer.setPreferredSize(new Dimension(1400, 1700));
 		this.jScrollPane.setViewportView(jPanelContainer);
 		this.jLabelChartPoints.setHorizontalAlignment(JLabel.CENTER);
 		this.jLabelChartExp.setHorizontalAlignment(JLabel.CENTER);
 		this.btnBack.setOpaque(false);
 		configureB(btnBack, JFrameMain.FONT, 20, Font.PLAIN);
-		this.jLabel1.setText(" Numero de contagiados = 300 " + " 	Numero de sanos = 250 " + " 	Numero de recuperados = 100 ");
 		this.jLabel1.setOpaque(false);
 		configureLabels(jLabel1, JFrameMain.FONT, 20, Font.PLAIN, false);
 		addComponentsPanel();
@@ -66,10 +65,9 @@ public class JPanelMain extends JPanel {
 	}
 
 	private void addComponentsPanel() {
-		this.jPanelContainer.add(jLabelChartPoints).setBounds(30, 30, 1400, 800);
-		this.jPanelContainer.add(jLabel1).setBounds(30, 800, 1400, 350);
-		this.jPanelContainer.add(jLabelChartExp).setBounds(30, 1000, 1400, 800);
-		this.jPanelContainer.add(btnBack).setBounds(600, 1800, 300, 40);
+		this.jPanelContainer.add(jLabelChartPoints).setBounds(30, 10, 1400, 800);
+		this.jPanelContainer.add(jLabel1).setBounds(30, 600, 1400, 350);
+		this.jPanelContainer.add(jLabelChartExp).setBounds(30, 800, 1400, 800);
 	}
 
 	public void changeView(int index, Object... data) {
@@ -95,7 +93,13 @@ public class JPanelMain extends JPanel {
 
 	private void addCharts(Object[] data) {
 		chartPoints(data);
+		updateLabel(data);
 		chartExp(data);
+	}
+
+	private void updateLabel(Object[] data) {
+		this.jLabel1.setText(" Numero de Sanos = " + ((int[]) data[2])[0] + " " + " 	Numero de Contagiados = "
+				+ ((int[]) data[2])[1] + " " + " 	Numero de recuperados = " + ((int[]) data[2])[2] + " ");
 	}
 
 	private void chartExp(Object[] data) {
@@ -104,9 +108,9 @@ public class JPanelMain extends JPanel {
 		JFreeChart chart = ChartFactory.createXYLineChart("", "", "", dataset);
 		XYPlot plot = chart.getXYPlot();
 		NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-		rangeAxis.setRange(0, 500);
+		rangeAxis.setRange(0, ((int[]) data[2])[1] + ((int[]) data[2])[0] + ((int[]) data[2])[2] + 50);
 		NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
-		domainAxis.setRange(0, 300);
+		domainAxis.setRange(0, 365);
 		plot.setBackgroundPaint(Color.WHITE);
 		plot.setRangeGridlinePaint(new Color(200, 200, 200));
 		plot.setDomainGridlinePaint(new Color(200, 200, 200));
@@ -126,11 +130,9 @@ public class JPanelMain extends JPanel {
 		double[][] s1 = (double[][]) object[0];
 		double[][] s2 = (double[][]) object[1];
 		double[][] s3 = (double[][]) object[2];
-		double[][] s4 = (double[][]) object[3];
-		dataset.addSeries("Enfermos con Tapabocas", s1);
-		dataset.addSeries("Enfermos Sin Tapabocas", s2);
-		dataset.addSeries("Sanos con Tapabocas", s3);
-		dataset.addSeries("Sanos Sin Tapabocas", s4);
+		dataset.addSeries("Personas Sanas", s1);
+		dataset.addSeries("Personas Enfermas", s2);
+		dataset.addSeries("Personas Recuperadas", s3);
 	}
 
 	private void chartPoints(Object[] data) {
@@ -139,9 +141,9 @@ public class JPanelMain extends JPanel {
 		JFreeChart chart = ChartFactory.createScatterPlot("", "", "", dataset);
 		XYPlot plot = chart.getXYPlot();
 		NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-		rangeAxis.setRange(0, 500);
+		rangeAxis.setRange(0, 100);
 		NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
-		domainAxis.setRange(0, 500);
+		domainAxis.setRange(0, 100);
 		plot.setBackgroundPaint(Color.WHITE);
 		plot.setRangeGridlinePaint(new Color(200, 200, 200));
 		plot.setDomainGridlinePaint(new Color(200, 200, 200));
@@ -162,10 +164,12 @@ public class JPanelMain extends JPanel {
 		double[][] s2 = (double[][]) object[1];
 		double[][] s3 = (double[][]) object[2];
 		double[][] s4 = (double[][]) object[3];
+		double[][] s5 = (double[][]) object[4];
 		dataset.addSeries("Enfermos con Tapabocas", s1);
 		dataset.addSeries("Enfermos Sin Tapabocas", s2);
 		dataset.addSeries("Sanos con Tapabocas", s3);
 		dataset.addSeries("Sanos Sin Tapabocas", s4);
+		dataset.addSeries("Recuperados", s5);
 	}
 
 	private void removeComponents() {
@@ -194,26 +198,30 @@ public class JPanelMain extends JPanel {
 		}
 
 	}
-	
+
 	public String getText1() {
 		return jPanelStart.getText1();
 	}
+
 	public String getText2() {
 		return jPanelStart.getText2();
 	}
+
 	public String getText3() {
 		return jPanelStart.getText3();
 	}
+
 	public String getText4() {
 		return jPanelStart.getText4();
 	}
+
 	public String getText5() {
 		return jPanelStart.getText4();
 	}
+
 	public String getText6() {
 		return jPanelStart.getText4();
 	}
-	
 
 	@Override
 	public void paint(Graphics g) {
