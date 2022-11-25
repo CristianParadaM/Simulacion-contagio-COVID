@@ -74,11 +74,13 @@ public class JPanelMain extends JPanel {
 		removeComponents();
 		switch (index) {
 		case 0:
-			this.jPanelStart.setVisible(true);
-			this.add(jPanelStart);
+			this.jScrollPane.setViewportView(jPanelStart);
+			this.jScrollPane.setVisible(true);
+			this.add(jScrollPane);
 			break;
 		case 1:
 			this.jScrollPane.setVisible(true);
+			this.jScrollPane.setViewportView(jPanelContainer);
 			addCharts(data);
 			this.add(jScrollPane);
 			break;
