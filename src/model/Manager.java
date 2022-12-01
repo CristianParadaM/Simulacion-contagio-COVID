@@ -12,9 +12,13 @@ public class Manager {
 	private ArrayList<Double> timesSickPersons;
 	private ArrayList<Double> timesNormalPersons;
 	private ArrayList<Double> timesRecoveryPersons;
+	private int days;
+	private int range;
 
 	public Manager(int numberOfSickWithMask, int numberOfSickWithoutMask, int numberOfNormalWithMask,
 			int numberOfNormalWithoutMask, int k, int c) {
+		this.range = 0;
+		this.days = 365;
 		this.amountPersons = calculateAmountPerson(numberOfNormalWithMask, numberOfNormalWithoutMask,
 				numberOfSickWithMask, numberOfSickWithoutMask);
 		this.persons = generatePersons(numberOfNormalWithMask, numberOfNormalWithoutMask, numberOfSickWithMask,
@@ -32,8 +36,30 @@ public class Manager {
 	}
 
 	private void startSimulation() {
-		JFrameMain.createProgress(0, 365, "Generando simulacion");
-		for (int i = 0; i < 365; i++) {
+		JFrameMain.createProgress(0, this.days, "Generando simulacion");
+		for (int i = 0; i < this.days; i++) {
+			JFrameMain.setProgressBar(i);
+			for (int j = 0; j < persons.length; j++) {
+				comparePosition(persons[j], i);
+			}
+		}
+		JFrameMain.disposeDialog();
+	}
+
+	public void addMorePositions() {
+		int k = persons[0].getCoordinate(364).getX();
+		int c = persons[0].getCoordinate(364).getY();
+		this.ri = generateRi(k > c ? (k % 2 == 0 ? k : (k + 1)) : (c % 2 == 0 ? c : (c + 1)),
+				k < c ? (k % 2 != 0 ? k : (k + 1)) : (c % 2 != 0 ? c : (c + 1)));
+		count = ri.length - 1;
+		JFrameMain.createProgress(0, this.days, "Generando más posiciones");
+		for (int i = 0; i < persons.length; i++) {
+			JFrameMain.setProgressBar(i);
+			this.persons[i].addMorePositions();
+		}
+		JFrameMain.disposeDialog();
+		JFrameMain.createProgress(0, this.days, "Generando más simulación");
+		for (int i = 0; i < this.days; i++) {
 			JFrameMain.setProgressBar(i);
 			for (int j = 0; j < persons.length; j++) {
 				comparePosition(persons[j], i);
@@ -50,6 +76,10 @@ public class Manager {
 				analyzePossibleContagion(persons[i], person, instantOfTime);
 			}
 		}
+	}
+
+	public int getDays() {
+		return days;
 	}
 
 	private void analyzePossibleContagion(Person person, Person person2, int instantOfTime) {
@@ -225,25 +255,39 @@ public class Manager {
 	}
 
 	public Object[] separateAnalitics(int i) {
-		int[] analitics = calculateNumberPeopleInState(i);
-
+		int[] analitics = calculateNumberPeopleInState(i-range);
 		this.timesNormalPersons.add(Double.valueOf(analitics[0]));
 		this.timesSickPersons.add(Double.valueOf(analitics[1]));
 		this.timesRecoveryPersons.add(Double.valueOf(analitics[2]));
-
 		double[] indexes = getArrayIndex(i);
-
 		return new Object[] { new double[][] { indexes, convertToArray(timesNormalPersons) },
 				new double[][] { indexes, convertToArray(timesSickPersons) },
 				new double[][] { indexes, convertToArray(timesRecoveryPersons) } };
 	}
-
+	
 	private double[] convertToArray(ArrayList<Double> times) {
 		double[] aux = new double[times.size()];
 		for (int i = 0; i < aux.length; i++) {
 			aux[i] = times.get(i);
 		}
 		return aux;
+	}
+
+	public double[] getPercentages(int time) {
+		int[] aux = calculateNumberPeopleInState(time);
+		double a = aux[0] + aux[1] + aux[2];
+		double percent1 = (aux[0] * 100) / a;
+		double percent2 = (aux[1] * 100) / a;
+		double percent3 = (aux[2] * 100) / a;
+		return new double[] { percent1, percent2, percent3 };
+	}
+	
+	public void setRange(int range) {
+		this.range = range;
+	}
+	
+	public int getRange() {
+		return range;
 	}
 
 	private double[] getArrayIndex(int index) {

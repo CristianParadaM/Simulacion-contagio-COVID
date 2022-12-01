@@ -43,7 +43,6 @@ public class Controller implements ActionListener {
 			int n2 = Integer.parseInt(view.getText2());
 			int n3 = Integer.parseInt(view.getText3());
 			int n4 = Integer.parseInt(view.getText4());
-
 			int k = Integer.parseInt(view.getText5());
 			int c = Integer.parseInt(view.getText6());
 
@@ -51,11 +50,12 @@ public class Controller implements ActionListener {
 
 			try {
 				Object[] data = null;
-
-				for (int i = 0; i < 365; i++) {
-					Object[] arrays = manager.separateArrays(i);
+				int i = 0, x = 0;
+				boolean start = true;
+				do {
+					Object[] arrays = manager.separateArrays(x);
 					Object[] analitics = manager.separateAnalitics(i);
-					
+					int[] numberpersons = manager.calculateNumberPeopleInState(x);
 					data = new Object[] {new Object[] {
 						(double[][])arrays[0],
 						(double[][])arrays[1],
@@ -66,14 +66,24 @@ public class Controller implements ActionListener {
 							(double[][])analitics[0],
 							(double[][])analitics[1],
 							(double[][])analitics[2]
-					}, manager.calculateNumberPeopleInState(i) };
-					if (i == 0) {
+					}, numberpersons};
+					if (i == 0 && start) {
 						view.changeView(1, data);
+						i++;
 					} else {
 						view.updateChart(data);
+						i++;
 					}
-					Thread.sleep(1000);
-				}
+					if ((i+1) == manager.getDays() && numberpersons[1] != 0) {
+						manager.addMorePositions();
+						view.addmoresteps(data);
+						manager.setRange(manager.getRange()+364);
+						start = false;
+						x=0;
+					}
+					Thread.sleep(10);
+				} while (manager.calculateNumberPeopleInState(x++)[1] != 0);
+				JFrameMain.createPercentages("Resultados Finales", manager.getPercentages(x));
 			} catch (InterruptedException e) {
 			}
 		}).start();

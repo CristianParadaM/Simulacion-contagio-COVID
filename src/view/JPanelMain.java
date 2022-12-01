@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,6 +33,7 @@ public class JPanelMain extends JPanel {
 	private JLabel jLabelChartExp;
 	private JLabel jLabel1;
 	private JButton btnBack;
+	private int range;
 
 	public JPanelMain() {
 		super(new GridLayout());
@@ -43,6 +44,7 @@ public class JPanelMain extends JPanel {
 		this.jLabelChartExp = new JLabel();
 		this.btnBack = new JButton("       regresar        ");
 		this.jLabel1 = new JLabel("", JLabel.CENTER);
+		this.range = 365;
 		init();
 	}
 
@@ -96,15 +98,15 @@ public class JPanelMain extends JPanel {
 	private void addCharts(Object[] data) {
 		chartPoints(data);
 		updateLabel(data);
-		chartExp(data);
+		chartExp(data, false);
 	}
 
 	private void updateLabel(Object[] data) {
-		this.jLabel1.setText(" Numero de Sanos = " + ((int[]) data[2])[0] + " " + " 	Numero de Contagiados = "
-				+ ((int[]) data[2])[1] + " " + " 	Numero de recuperados = " + ((int[]) data[2])[2] + " ");
+		this.jLabel1.setText(" Número de Sanos = " + ((int[]) data[2])[0] + " " + " 	Número de Contagiados = "
+				+ ((int[]) data[2])[1] + " " + " 	Número de recuperados = " + ((int[]) data[2])[2] + " ");
 	}
 
-	private void chartExp(Object[] data) {
+	private void chartExp(Object[] data, boolean b) {
 		DefaultXYDataset dataset = new DefaultXYDataset();
 		filldataSetExp(dataset, (Object[]) data[1]);
 		JFreeChart chart = ChartFactory.createXYLineChart("", "", "", dataset);
@@ -112,7 +114,12 @@ public class JPanelMain extends JPanel {
 		NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
 		rangeAxis.setRange(0, ((int[]) data[2])[1] + ((int[]) data[2])[0] + ((int[]) data[2])[2] + 50);
 		NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
-		domainAxis.setRange(0, 365);
+		if (b) {
+			range*=2;
+			domainAxis.setRange(0, range);
+		}else {
+			domainAxis.setRange(0, range);
+		}
 		plot.setBackgroundPaint(Color.WHITE);
 		plot.setRangeGridlinePaint(new Color(200, 200, 200));
 		plot.setDomainGridlinePaint(new Color(200, 200, 200));
@@ -154,10 +161,12 @@ public class JPanelMain extends JPanel {
 		a.setSeriesOutlineStroke(1, new BasicStroke(3));
 		a.setSeriesOutlineStroke(2, new BasicStroke(3));
 		a.setSeriesOutlineStroke(3, new BasicStroke(3));
-		a.setSeriesPaint(0, new Color(240, 149, 8));
+		a.setSeriesPaint(0, new Color(255, 110, 3));
 		a.setSeriesPaint(1, Color.RED);
 		a.setSeriesPaint(2, new Color(26, 133, 254));
-		a.setSeriesPaint(3, new Color(23, 187, 4));
+		a.setSeriesPaint(3, new Color(255, 147, 216));
+		a.setSeriesPaint(4, new Color(45, 255, 3));
+		a.setSeriesShape(4, new RoundRectangle2D.Double(8,8,8,8,3,3));
 		jLabelChartPoints.setIcon(new ImageIcon(chart.createBufferedImage(1300, 700)));
 	}
 
@@ -230,5 +239,9 @@ public class JPanelMain extends JPanel {
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		super.paint(g);
+	}
+
+	public void addmoresteps(Object[] data) {
+		chartExp(data, true);
 	}
 }
