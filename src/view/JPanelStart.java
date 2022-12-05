@@ -38,13 +38,13 @@ public class JPanelStart extends JPanel {
 	public JPanelStart() {
 		super(new GridBagLayout());
 		this.gbc = new GridBagConstraints();
-		this.jLabelTitle = new JLabel("SimulaciÃ³n de contagios de COVID 19", JLabel.CENTER);
-		this.jLabelOption1 = new JLabel("NÃºmero de personas enfermas con tapabocas", JLabel.CENTER);
-		this.jLabelOption2 = new JLabel("NÃºmero de personas enfermas sin tapabocas", JLabel.CENTER);
-		this.jLabelOption3 = new JLabel("NÃºmero de personas sanas con tapabocas", JLabel.CENTER);
-		this.jLabelOption4 = new JLabel("NÃºmero de personas sanas sin tapabocas", JLabel.CENTER);
-		this.jLabelOption5 = new JLabel("NÃºmero K Par menor a 32.000", JLabel.CENTER);
-		this.jLabelOption6 = new JLabel("NÃºmero C Impar menor a 32.000 ", JLabel.CENTER);
+		this.jLabelTitle = new JLabel("Simulación de contagios de COVID 19", JLabel.CENTER);
+		this.jLabelOption1 = new JLabel("Número de personas enfermas con tapabocas", JLabel.CENTER);
+		this.jLabelOption2 = new JLabel("Número de personas enfermas sin tapabocas", JLabel.CENTER);
+		this.jLabelOption3 = new JLabel("Número de personas sanas con tapabocas", JLabel.CENTER);
+		this.jLabelOption4 = new JLabel("Número de personas sanas sin tapabocas", JLabel.CENTER);
+		this.jLabelOption5 = new JLabel("Número K Par menor a 32.000", JLabel.CENTER);
+		this.jLabelOption6 = new JLabel("Número C Impar menor a 32.000 ", JLabel.CENTER);
 		this.jTextField1 = new JTextField();
 		this.jTextField2 = new JTextField();
 		this.jTextField3 = new JTextField();

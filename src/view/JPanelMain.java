@@ -102,8 +102,8 @@ public class JPanelMain extends JPanel {
 	}
 
 	private void updateLabel(Object[] data) {
-		this.jLabel1.setText(" NÃºmero de Sanos = " + ((int[]) data[2])[0] + " " + " 	NÃºmero de Contagiados = "
-				+ ((int[]) data[2])[1] + " " + " 	NÃºmero de recuperados = " + ((int[]) data[2])[2] + " ");
+		this.jLabel1.setText(" Número de Sanos = " + ((int[]) data[2])[0] + " " + " 	Número de Contagiados = "
+				+ ((int[]) data[2])[1] + " " + " 	Número de recuperados = " + ((int[]) data[2])[2] + " ");
 	}
 
 	private void chartExp(Object[] data, boolean b) {

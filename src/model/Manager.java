@@ -52,13 +52,13 @@ public class Manager {
 		this.ri = generateRi(k > c ? (k % 2 == 0 ? k : (k + 1)) : (c % 2 == 0 ? c : (c + 1)),
 				k < c ? (k % 2 != 0 ? k : (k + 1)) : (c % 2 != 0 ? c : (c + 1)));
 		count = ri.length - 1;
-		JFrameMain.createProgress(0, this.days, "Generando mÃ¡s posiciones");
+		JFrameMain.createProgress(0, this.days, "Generando más posiciones");
 		for (int i = 0; i < persons.length; i++) {
 			JFrameMain.setProgressBar(i);
 			this.persons[i].addMorePositions();
 		}
 		JFrameMain.disposeDialog();
-		JFrameMain.createProgress(0, this.days, "Generando mÃ¡s simulaciÃ³n");
+		JFrameMain.createProgress(0, this.days, "Generando más simulación");
 		for (int i = 0; i < this.days; i++) {
 			JFrameMain.setProgressBar(i);
 			for (int j = 0; j < persons.length; j++) {
@@ -255,7 +255,7 @@ public class Manager {
 	}
 
 	public Object[] separateAnalitics(int i) {
-		int[] analitics = calculateNumberPeopleInState(i-range);
+		int[] analitics = calculateNumberPeopleInState(i - range);
 		this.timesNormalPersons.add(Double.valueOf(analitics[0]));
 		this.timesSickPersons.add(Double.valueOf(analitics[1]));
 		this.timesRecoveryPersons.add(Double.valueOf(analitics[2]));
@@ -264,7 +264,7 @@ public class Manager {
 				new double[][] { indexes, convertToArray(timesSickPersons) },
 				new double[][] { indexes, convertToArray(timesRecoveryPersons) } };
 	}
-	
+
 	private double[] convertToArray(ArrayList<Double> times) {
 		double[] aux = new double[times.size()];
 		for (int i = 0; i < aux.length; i++) {
@@ -281,11 +281,11 @@ public class Manager {
 		double percent3 = (aux[2] * 100) / a;
 		return new double[] { percent1, percent2, percent3 };
 	}
-	
+
 	public void setRange(int range) {
 		this.range = range;
 	}
-	
+
 	public int getRange() {
 		return range;
 	}
